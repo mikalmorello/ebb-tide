@@ -8,4 +8,4 @@ function Tide(){
   )
 }
 
-export default Header;
+export default Tide;

@@ -1,14 +1,16 @@
 import React from "react";
-import Header from "../Header";
-import Api from "../Api";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Home from "../Home";
+import Tide from "../Tide";
 import "./app.scss";
 
 function App() {
   return(
-    <main>
-      <Header />
-//      <Api />
-    </main>
+    <Router>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/tide" component={Tide} />
+      <Route exact path="/tide/:slug" component={Tide} />
+    </Router>
   )
 }
 
