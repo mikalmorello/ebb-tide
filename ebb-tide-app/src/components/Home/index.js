@@ -1,6 +1,6 @@
 import React from "react";
 
-function Home(){
+function Home(props){
   const initialStation = "8447505";
   const [station, setStation] = React.useState(initialStation);
   const [stationInput, setStationInput] = React.useState(initialStation);
@@ -15,6 +15,7 @@ function Home(){
   const handleSubmit = async e => {
     e.preventDefault();
     setStation(stationInput);
+    props.history.push(`/tide/${station}`);
   };
   
   return(
@@ -27,13 +28,12 @@ function Home(){
           <input
             onChange={handleChange}
             value={stationInput}
-            id="zip"
             type="text"
           />
           <input
             id="button"
             type="submit"
-            value="GO"
+            value="Search"
           />
         </form>
       </section>

@@ -1,10 +1,21 @@
 import React from "react";
+import Api from "../Api";
+import Header from "../Header";
 
-function Tide(){
+function Tide({match}){
+//  console.log(match.params.slug);
+  const initialStation = match.params.slug;
+  const [station, setStation] = React.useState(initialStation);
+  console.log(station);
+  
   return(
-    <section>
-      Tide Info
-    </section>
+    <>
+      <Header />
+      <section>
+        Tide Info
+        <Api station={station} />
+      </section>
+    </>
   )
 }
 
