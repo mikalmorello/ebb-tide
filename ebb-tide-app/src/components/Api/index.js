@@ -1,5 +1,5 @@
 import React from "react";
-
+import Loader from "../Loader";
 
 // Api Call
 const fetchData = async (station, startDate, endDate) => {
@@ -60,7 +60,7 @@ function Api({station}) {
   // Loading State
   if (isLoading) {
     return (
-      <div>Loading...</div>
+      <Loader />
     )
   } 
   
