@@ -10,6 +10,7 @@ const fetchData = async (station, startDate, endDate) => {
   return json;
 };
 
+// Format date for Fetch Url
 function formatDate(date) {
   let newDate = date.toISOString().slice(0,10);
   newDate = newDate.replace(/-/g,"");
@@ -23,53 +24,59 @@ function Api({station}) {
   const [startDate, setStartDate] = React.useState();
   const [endDate, setEndDate] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
-
+  const [tideDate, setTideDate] = React.useState('no date');
   
-  // Get Tide Date
-  let tideDate = '';
-  if(tideData){
-    tideDate = new Date(tideData.predictions[0].t);
-  }
   
-  // Get Start Date
-//  React.useEffect(() => {
-//      const tempDate = new Date();
-//      let tempStartDate = `${tempDate.getFullYear()}${tempDate.getMonth()+1}${tempDate.getDate()}`;
-//      let tempEndDate = `${tempDate.getFullYear()}${tempDate.getMonth()+1}(${tempDate.getDate()}+1)`;
-//      setStartDate(tempStartDate);
-//      setEndDate(tempEndDate);
-//  });
-
-  
-  // On station change, call API
+  //  Determine start and end date for api call
   React.useEffect(() => {
       const dateToday = new Date();
       const dateTomorrow = new Date(dateToday)
         dateTomorrow.setDate(dateTomorrow.getDate() + 1);
-      let tempStartDate = formatDate(dateToday);
-      let tempEndDate = formatDate(dateTomorrow);
-//      setStartDate(tempStartDate);
-//      setEndDate(tempEndDate);
-    (async () => {
-      const incomingData = await fetchData(station, tempStartDate, tempEndDate);
-      setTideData(incomingData);
-      setIsLoading(false);
-    })();
-  }, [station]);
+      const tempStartDate = formatDate(dateToday);
+      const tempEndDate = formatDate(dateTomorrow);
+      setStartDate(tempStartDate);
+      setEndDate(tempEndDate);
+  }, [startDate, endDate]);
+
   
-  // Loading State
+  // Call api on station or date change
+  React.useEffect(() => {
+    if(station && startDate && endDate){
+      (async () => {
+        const incomingData = await fetchData(station, startDate, endDate);
+        setTideData(incomingData);
+        setIsLoading(false);
+      })();
+    }
+  }, [station, startDate, endDate ]);
+   
+  
+  // Get tide date from api
+  React.useEffect(() => {
+    if(tideData){
+      let tempTideDate = '';
+      tempTideDate = new Date(tideData.predictions[0].t);
+      tempTideDate = tempTideDate.toUTCString();
+      console.log('temp tide date is ' + tempTideDate);
+      setTideDate(tempTideDate);
+    }
+    
+  }, [tideData]);
+  
+  
+  // Loading state while api is running
   if (isLoading) {
     return (
       <Loader />
     )
   } 
+      
   
-  // Active State
+  // Active state after api has run
   return (
     <div>
-      Api station is {currentStation}
-      <br />
-      { tideDate.toUTCString() }
+      Api station is: {currentStation}<br />
+      Current tide date is: { tideDate }
     </div>
   );
 }
