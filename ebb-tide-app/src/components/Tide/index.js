@@ -13,7 +13,7 @@ function Tide({match}){
       <Header />
       <section>
         Tide Info
-        <Api station={station} />
+        <Api station={station} /> 
       </section>
     </>
   )
