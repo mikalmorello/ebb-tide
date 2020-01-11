@@ -93,10 +93,13 @@ function Api({station}) {
     if(tideData){
       let tempTideDate = '';
       tempTideDate = new Date(tideData.predictions[0].t);
+			console.log(tempTideDate);
+		console.log(`${tempTideDate.getDate()}`);
+		
+		
       tempTideDate = tempTideDate.toUTCString();
 //      console.log('temp tide date is ' + tempTideDate);
       setTideDate(tempTideDate);
-//			console.log('temp tide type is ' + tempTideDate);
     }
   }, [tideData]);
 	
@@ -140,10 +143,12 @@ function Api({station}) {
   // Active state after api has run
   return (
     <div>
-      Api station ID is: {currentStation}<br />
+			Current tide date is: {tideDate} <br />
+			tide time is: <br />
+			Next tide is: {nextTide}   <br />
 			Api station Name is: {stationName}<br />
-      Current tide date is: {tideDate} <br />
-			Next tide is: {nextTide}   
+      
+			
     </div>
   );
 }
