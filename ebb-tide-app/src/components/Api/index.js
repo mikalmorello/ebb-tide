@@ -1,11 +1,15 @@
 import React from "react";
 import Loader from "../Loader";
+import Moment from 'react-moment';
+import 'moment-timezone';
+import momentjs from "moment";
 
 // High / Low Tide Data API Call
 const fetchData = async (station, startDate, endDate) => {
   const fetchUrl=`https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS.COOPS.TAC.WL&begin_date=${startDate}&end_date=${endDate}&datum=MLLW&station=${station}&time_zone=lst_ldt&units=english&interval=hilo&format=json`
   const response = await fetch(fetchUrl);
   const json = await response.json();
+	console.log(json);
   return json;
 };
 
@@ -47,6 +51,8 @@ function Api({station}) {
 	const [nextTide, setNextTide] = React.useState('');
 	const [stationData, setStationData] = React.useState();
 	const [stationName, setStationName] = React.useState();
+	const [currentTime, setCurrentTime] = React.useState();
+	const [tideHeight, setTideHeight] = React.useState();
   
   
   //  Determine start and end date for api call
@@ -73,7 +79,7 @@ function Api({station}) {
   }, [station, startDate, endDate ]);
    
   
-  // Get tide type from api
+  // Get tide type
   React.useEffect(() => {
     if(tideData){
       let tempNextTide = tideData.predictions[0].type;
@@ -85,25 +91,26 @@ function Api({station}) {
 //			console.log('temp tide type is ' + tempNextTide);
       setNextTide(tempNextTide);  
     }
-    
   }, [tideData]);
   
-	// Get next tide type from api
+	// Get next tide date 
   React.useEffect(() => {
     if(tideData){
       let tempTideDate = '';
       tempTideDate = new Date(tideData.predictions[0].t);
-			console.log(tempTideDate);
-		console.log(`${tempTideDate.getDate()}`);
-		
-		
-      tempTideDate = tempTideDate.toUTCString();
-//      console.log('temp tide date is ' + tempTideDate);
+//      tempTideDate = tempTideDate.toUTCString();
       setTideDate(tempTideDate);
     }
   }, [tideData]);
 	
-	
+  // Get tide height 
+  React.useEffect(() => {
+    if(tideData){
+      let tempTideHeight = tideData.predictions[0].v;
+			tempTideHeight = Math.round( tempTideHeight * 100 ) / 100;
+      setTideHeight(tempTideHeight);
+    }
+  }, [tideData]);
 	
 	// Station API Call
   React.useEffect(() => {
@@ -132,6 +139,14 @@ function Api({station}) {
   }, [stationData]);
 	
 	
+	// Current time
+  React.useEffect(() => {
+		window.setInterval(function(){
+    	setCurrentTime(momentjs(new Date()).format("MMMM D hh:mm a"));
+		}, 1000);
+  });
+	
+	
   
   // Loading state while api is running
   if (isLoading) {
@@ -143,12 +158,16 @@ function Api({station}) {
   // Active state after api has run
   return (
     <div>
-			Current tide date is: {tideDate} <br />
-			tide time is: <br />
+			Current tide date is: <Moment format="MMMM D">{tideDate}</Moment> <br />
+			day of week: <Moment format="hh:mm">{tideDate}</Moment><br />
+			tide time is: <Moment format="hh:mm">{tideDate}</Moment><br />
+			am or pm: <Moment format="a">{tideDate}</Moment><br />
+			current time: <Moment></Moment><br />
+			time from now: <Moment fromNow> {tideDate} </Moment> <br />
 			Next tide is: {nextTide}   <br />
 			Api station Name is: {stationName}<br />
-      
-			
+			current time is: {currentTime};<br />
+			tide height is: {tideHeight}ft
     </div>
   );
 }
