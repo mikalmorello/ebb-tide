@@ -14,41 +14,58 @@ const fetchData = async (station, startDate, endDate) => {
   return json;
 };
 
+// Station Data API Call
+const fetchStationData = async (station) => {
+  const fetchUrl=`https://tidesandcurrents.noaa.gov/mdapi/v1.0/webapi/stations/${station}.json`
+  const response = await fetch(fetchUrl);
+  const json = await response.json();
+  return json;
+};
 
-// Format date for Fetch Url
-function formatDate(date) {
-//	console.log('date format is ' + momentjs(date).format("YYYYMMd HH:mm"));
-  let newDate = date.toISOString().slice(0,10);
-  newDate = newDate.replace(/-/g,"");
-  return newDate;
+// Readable name for tide type
+function formatTideType(tideType) {
+	if(tideType === 'L') {
+		tideType = 'Low Tide';
+	} else if (tideType === 'H'){
+		tideType = 'High Tide';
+	}
+	return tideType;
 }
 
-function Api({station}) {
+// Readable label for tide direction
+function formatTideDirection(tideDirection){
+	if(tideDirection) {
+		return 'Tide is coming in';
+	} else {
+		return 'Tide is going out';
+	}
+}
+
+// API Functionality
+
+function Api({station, tideDate}) {
   const [tideData, setTideData] = React.useState();
   const [startDate, setStartDate] = React.useState();
-	const [currentDate, setCurrentDate] = React.useState();
   const [endDate, setEndDate] = React.useState();
-	const [currentDateTime, setCurrentDateTime] = React.useState();
 	const [nextTide, setNextTide] = React.useState();
 	const [previousTide, setPreviousTide] = React.useState();
+	const [stationData, setStationData] = React.useState();
+	const [stationName, setStationName] = React.useState();
+	const [tideDirection, setTideDirection] = React.useState();
+	const [currentTime, setCurrentTime] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
  
-
-	  React.useEffect(() => {
-			const dateYesterday = momentjs(new Date()).subtract(1, 'days');
-      const dateToday = momentjs(new Date());
-			setCurrentDateTime(dateToday.format('YYYY-MM-d HH:mm'));
-      const dateTomorrow = momentjs(new Date()).add(1,'days');
-			const tempStartDate = formatDate(dateYesterday);
-			const tempCurrentDate = formatDate(dateToday);
-      const tempEndDate = formatDate(dateTomorrow);
-      setStartDate(tempStartDate);
-			setCurrentDate(tempCurrentDate);
-      setEndDate(tempEndDate);
-  }, [startDate, endDate]);
+	
+	// Determine date range based upon selected date
+	React.useEffect(() => {
+		const previousDay = momentjs(tideDate).subtract(1, 'days').format('YYYYMMD'),
+					nextDay = momentjs(tideDate).add(1, 'days').format('YYYYMMD');
+		setStartDate(previousDay);
+		setEndDate(nextDay);
+  }, [startDate, endDate, tideDate]);
 
   
-  // Call API on station or date change
+  // Call High / Low tide API 
   React.useEffect(() => {
     if(station && startDate && endDate){
       (async () => {
@@ -60,37 +77,69 @@ function Api({station}) {
   }, [station, startDate, endDate ]);
 	
 	
-	// Determine High Tide and Low Tide based off of date set
+	// Determine previous and next tides based off API call
 	React.useEffect(() => {
 		if(tideData) {
-			
 			tideData.predictions.map((tide, index) => {
-				let currentTime = momentjs(new Date());
 				let tideTime = momentjs(tide.t);
-				let timeDiff = tideTime.diff(currentTime);
-				console.log(`
-					current time: ${currentTime}
-					tide time: ${tideTime}
-					difference: ${timeDiff}
-				`);
+				let timeDiff = tideTime.diff(tideDate);
 				
-				// Find the next tide
+				// Find the next tide, set tide array index
 				if((timeDiff > 0) && (timeDiff < 22350000)){
-					 console.log('the next tide is' + tide.t);
-					 console.log('the array index is' + index);
 					 setNextTide(tideData.predictions[index]);
 				}
 				
-				// Find the previous tide										 
+				// Find the previous tide, set tide array index									 
 				if((timeDiff < 0) && (timeDiff > -22350000)){
-					 console.log('the previous tide is' + tide.t);
-					 console.log('the array index is' + index);
 					 setPreviousTide(tideData.predictions[index]);
 				}
 			});
 			
 	 	}
-   }, [tideData ]);
+   }, [tideData, tideDate]);
+	
+	
+	// Set Tide Direction
+	React.useEffect(() => {
+    if(previousTide){
+			if(previousTide === 'L') {
+				setTideDirection(1);
+			} else {
+				setTideDirection(0);
+			}
+    }
+  }, [previousTide]);
+	
+	
+	// Call Station API
+  React.useEffect(() => {
+    if(station){
+      (async () => {
+        const incomingData = await fetchStationData(station);
+        setStationData(incomingData);
+      })();
+    }
+  }, [station]);
+	
+	
+	// Set Station Name
+	React.useEffect(() => {
+    if(stationData){
+      let tempStationName = stationData.stations[0].name,
+					tempStationState = stationData.stations[0].state;
+			let tempStationFullName = `${tempStationName}, ${tempStationState}`;
+			setStationName(tempStationFullName);
+    }
+  }, [stationData]);
+	
+
+	
+	// Current time
+  React.useEffect(() => {
+		window.setInterval(function(){
+    	setCurrentTime(momentjs(new Date()).format("MMMM D hh:mm a"));
+		}, 1000);
+  });
 	
 	
   // Loading state while api is running
@@ -100,28 +149,29 @@ function Api({station}) {
     )
   } 
       
+			
   // Active state after api has run
   return (
 		<main>
 			<section>
-				Current Date: {currentDate} <br />
 			  Start Date: {startDate} <br />
 				End Date: {endDate} <br />
-			 <hr />
-			 Current Date and Time is: <br />
-			{currentDateTime} <br />
-			Tide data times: <br />
-			{tideData.predictions.map((tide, index) => (
-         <div>
-			     {tide.t}
-			     {index}
-				 </div>
-        ))}
-			<hr />
-				Previous Tide: {previousTide.t}<br />
-				Previous Tide Type: {previousTide.type}<br />
-	      Next Tide: {nextTide.t}<br />
-	      Next Tide Type:{nextTide.type}<br />
+			  <hr />
+			  Tide date is: <Moment format="dddd, MMMM D">{tideDate}</Moment> <br />
+			  Tide Date time is: <Moment format="hh:mm">{tideDate}</Moment><br />
+			  Tide date period: <Moment format="a">{tideDate}</Moment><br />
+			  <hr />
+			  Current user time is: <Moment>{currentTime}</Moment><br /> 
+			  <hr />
+				Previous Tide: {previousTide.t} <br />
+				Previous Tide Type: {formatTideType(previousTide.type)} <br />
+				Next Tide Height: {previousTide.v}ft <br />
+				Next Tide: {nextTide.t} <br />
+				Next Tide Type:{formatTideType(nextTide.type)} <br />
+				Next Tide Height: {nextTide.v}ft <br />
+				The tide direction: {formatTideDirection(tideDirection)}
+				<hr />
+				Api station Name is: {stationName}<br />
 			</section>
 		</main>
   );
