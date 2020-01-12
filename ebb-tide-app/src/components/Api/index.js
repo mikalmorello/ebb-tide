@@ -7,62 +7,43 @@ import momentjs from "moment";
 // High / Low Tide Data API Call
 const fetchData = async (station, startDate, endDate) => {
   const fetchUrl=`https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS.COOPS.TAC.WL&begin_date=${startDate}&end_date=${endDate}&datum=MLLW&station=${station}&time_zone=lst_ldt&units=english&interval=hilo&format=json`
+	console.log(fetchUrl);
   const response = await fetch(fetchUrl);
   const json = await response.json();
 	console.log(json);
   return json;
 };
 
-// Station Data API Call
-const fetchStationData = async (station) => {
-  const fetchUrl=`https://tidesandcurrents.noaa.gov/mdapi/v1.0/webapi/stations/${station}.json`
-  const response = await fetch(fetchUrl);
-  const json = await response.json();
-//  console.log(json);
-//	console.log(json.stations[0].name)
-  return json;
-};
-
 
 // Format date for Fetch Url
 function formatDate(date) {
+//	console.log('date format is ' + momentjs(date).format("YYYYMMd HH:mm"));
   let newDate = date.toISOString().slice(0,10);
   newDate = newDate.replace(/-/g,"");
   return newDate;
 }
 
-// Title Case Conversion (https://gist.github.com/SonyaMoisset/aa79f51d78b39639430661c03d9b1058#file-title-case-a-sentence-for-loop-wc-js)
-var toTitleCase = function (str) {
-	str = str.toLowerCase().split(' ');
-	for (var i = 0; i < str.length; i++) {
-		str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
-	}
-	return str.join(' ');
-};
-
-
 function Api({station}) {
-  const currentStation = station;
   const [tideData, setTideData] = React.useState();
   const [startDate, setStartDate] = React.useState();
+	const [currentDate, setCurrentDate] = React.useState();
   const [endDate, setEndDate] = React.useState();
+	const [currentDateTime, setCurrentDateTime] = React.useState();
+	const [nextTide, setNextTide] = React.useState();
+	const [previousTide, setPreviousTide] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
-  const [tideDate, setTideDate] = React.useState('no date');
-	const [nextTide, setNextTide] = React.useState('');
-	const [stationData, setStationData] = React.useState();
-	const [stationName, setStationName] = React.useState();
-	const [currentTime, setCurrentTime] = React.useState();
-	const [tideHeight, setTideHeight] = React.useState();
-  
-  
-  //  Determine start and end date for api call
-  React.useEffect(() => {
-      const dateToday = new Date();
-      const dateTomorrow = new Date(dateToday)
-        dateTomorrow.setDate(dateTomorrow.getDate() + 1);
-      const tempStartDate = formatDate(dateToday);
+ 
+
+	  React.useEffect(() => {
+			const dateYesterday = momentjs(new Date()).subtract(1, 'days');
+      const dateToday = momentjs(new Date());
+			setCurrentDateTime(dateToday.format('YYYY-MM-d HH:mm'));
+      const dateTomorrow = momentjs(new Date()).add(1,'days');
+			const tempStartDate = formatDate(dateYesterday);
+			const tempCurrentDate = formatDate(dateToday);
       const tempEndDate = formatDate(dateTomorrow);
       setStartDate(tempStartDate);
+			setCurrentDate(tempCurrentDate);
       setEndDate(tempEndDate);
   }, [startDate, endDate]);
 
@@ -77,77 +58,41 @@ function Api({station}) {
       })();
     }
   }, [station, startDate, endDate ]);
-   
-  
-  // Get tide type
-  React.useEffect(() => {
-    if(tideData){
-      let tempNextTide = tideData.predictions[0].type;
-			if(tempNextTide === 'L') {
-				tempNextTide = 'Low Tide';
-			} else if (tempNextTide === 'H'){
-				tempNextTide = 'High Tide';
-			}
-//			console.log('temp tide type is ' + tempNextTide);
-      setNextTide(tempNextTide);  
-    }
-  }, [tideData]);
-  
-	// Get next tide date 
-  React.useEffect(() => {
-    if(tideData){
-      let tempTideDate = '';
-      tempTideDate = new Date(tideData.predictions[0].t);
-//      tempTideDate = tempTideDate.toUTCString();
-      setTideDate(tempTideDate);
-    }
-  }, [tideData]);
-	
-  // Get tide height 
-  React.useEffect(() => {
-    if(tideData){
-      let tempTideHeight = tideData.predictions[0].v;
-			tempTideHeight = Math.round( tempTideHeight * 100 ) / 100;
-      setTideHeight(tempTideHeight);
-    }
-  }, [tideData]);
-	
-	// Station API Call
-  React.useEffect(() => {
-    if(station){
-      (async () => {
-        const incomingData = await fetchStationData(station);
-        setStationData(incomingData);
-      })();
-    }
-  }, [station]);
 	
 	
-  // Get tide type from api
-  React.useEffect(() => {
-    if(stationData){
-      let tempStationName = stationData.stations[0].name,
-					tempStationState = stationData.stations[0].state;
+	// Determine High Tide and Low Tide based off of date set
+	React.useEffect(() => {
+		if(tideData) {
 			
-			    tempStationName = toTitleCase(tempStationName);
+			tideData.predictions.map((tide, index) => {
+				let currentTime = momentjs(new Date());
+				let tideTime = momentjs(tide.t);
+				let timeDiff = tideTime.diff(currentTime);
+				console.log(`
+					current time: ${currentTime}
+					tide time: ${tideTime}
+					difference: ${timeDiff}
+				`);
+				
+				// Find the next tide
+				if((timeDiff > 0) && (timeDiff < 22350000)){
+					 console.log('the next tide is' + tide.t);
+					 console.log('the array index is' + index);
+					 setNextTide(tideData.predictions[index]);
+				}
+				
+				// Find the previous tide										 
+				if((timeDiff < 0) && (timeDiff > -22350000)){
+					 console.log('the previous tide is' + tide.t);
+					 console.log('the array index is' + index);
+					 setPreviousTide(tideData.predictions[index]);
+				}
+			});
 			
-					let tempStationFullName = `${tempStationName}, ${tempStationState}`;
-//			console.log(tempStationFullName);
-			setStationName(tempStationFullName);
-    }
-    
-  }, [stationData]);
+	 	}
+   }, [tideData ]);
 	
 	
-	// Current time
-  React.useEffect(() => {
-		window.setInterval(function(){
-    	setCurrentTime(momentjs(new Date()).format("MMMM D hh:mm a"));
-		}, 1000);
-  });
-	
-	
-  
   // Loading state while api is running
   if (isLoading) {
     return (
@@ -157,18 +102,28 @@ function Api({station}) {
       
   // Active state after api has run
   return (
-    <div>
-			Current tide date is: <Moment format="MMMM D">{tideDate}</Moment> <br />
-			day of week: <Moment format="hh:mm">{tideDate}</Moment><br />
-			tide time is: <Moment format="hh:mm">{tideDate}</Moment><br />
-			am or pm: <Moment format="a">{tideDate}</Moment><br />
-			current time: <Moment></Moment><br />
-			time from now: <Moment fromNow> {tideDate} </Moment> <br />
-			Next tide is: {nextTide}   <br />
-			Api station Name is: {stationName}<br />
-			current time is: {currentTime};<br />
-			tide height is: {tideHeight}ft
-    </div>
+		<main>
+			<section>
+				Current Date: {currentDate} <br />
+			  Start Date: {startDate} <br />
+				End Date: {endDate} <br />
+			 <hr />
+			 Current Date and Time is: <br />
+			{currentDateTime} <br />
+			Tide data times: <br />
+			{tideData.predictions.map((tide, index) => (
+         <div>
+			     {tide.t}
+			     {index}
+				 </div>
+        ))}
+			<hr />
+				Previous Tide: {previousTide.t}<br />
+				Previous Tide Type: {previousTide.type}<br />
+	      Next Tide: {nextTide.t}<br />
+	      Next Tide Type:{nextTide.type}<br />
+			</section>
+		</main>
   );
 }
 
