@@ -1,0 +1,24 @@
+.homepage {
+	display: grid;
+	height: 100vh;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+	 width: 100vw;
+}
+
+.main {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	flex-grow: 1;
+	grid-area: main;
+}
+
+.branding {
+	align-items: center;
+	display: flex;
+	grid-area: header;
+	justify-content: center;
+}

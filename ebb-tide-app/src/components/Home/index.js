@@ -1,4 +1,7 @@
 import React from "react";
+import Footer from "../Footer";
+import EbbtideWordmark from '../../svg/EbbtideWordmark';
+import "./homepage.scss";
 
 function Home(props){
   const initialStation = "8447505";
@@ -19,26 +22,29 @@ function Home(props){
   };
   
   return(
-    <main>
-      <section>
-        <h1>HOME PAGE</h1>
-      </section>
-      <section>
-        <form onSubmit={handleSubmit}>
-          <input
-            onChange={handleChange}
-            value={stationInput}
-            type="text"
-          />
-          <input
-            id="button"
-            type="submit"
-            value="Search"
-          />
-        </form>
-      </section>
-      
-    </main>
+		<div className="homepage">
+			<header className="branding">
+				<h1>HOME PAGE</h1>
+		    <EbbtideWordmark />
+			</header>
+			<main className="main">
+				<section>
+					<form onSubmit={handleSubmit}>
+						<input
+							onChange={handleChange}
+							value={stationInput}
+							type="text"
+						/>
+						<input
+							id="button"
+							type="submit"
+							value="Search"
+						/>
+					</form>
+				</section>
+			</main>
+			<Footer />
+		</div>
   )
 }
 
