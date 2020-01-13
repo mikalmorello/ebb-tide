@@ -1,7 +1,12 @@
 import React from "react";
 import Footer from "../Footer";
 import EbbtideWordmark from '../../svg/EbbtideWordmark';
+import EbbtideLogo from '../../svg/EbbtideLogo';
+import SearchIcon from '../../svg/SearchIcon';
+
 import "./homepage.scss";
+import "./wave.scss";
+import "./form.scss";
 
 function Home(props){
   const initialStation = "8447505";
@@ -24,23 +29,30 @@ function Home(props){
   return(
 		<div className="homepage">
 			<header className="branding">
-				<h1>HOME PAGE</h1>
-		    <EbbtideWordmark />
+				<EbbtideLogo />
+				<h1><EbbtideWordmark /></h1>
+		    
 			</header>
 			<main className="main">
 				<section>
-					<form onSubmit={handleSubmit}>
+					<form className="station-form" onSubmit={handleSubmit} >
 						<input
+							className="station-form__input"
 							onChange={handleChange}
+		          placeholder='tide location...'
 							value={stationInput}
+		
 							type="text"
 						/>
-						<input
+						<button
+							className="station-form__button"
 							id="button"
 							type="submit"
-							value="Search"
-						/>
+						><SearchIcon /></button>
 					</form>
+		      <div className="wave"></div>
+					<div className="wave"></div>
+					<div className="wave"></div>
 				</section>
 			</main>
 			<Footer />

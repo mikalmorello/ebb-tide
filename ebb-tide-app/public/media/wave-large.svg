@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="839px" height="3109px" viewBox="0 0 839 3109" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>ALL - Wave Large</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M-4.09272616e-12,23.7194983 C67.9024658,-21.2250441 207.735799,-1.96309734 419.5,81.5053384 C631.264201,164.973774 771.097534,145.711828 839,23.7194983 L839,3096 L-4.09272616e-12,3096 L-4.09272616e-12,23.7194983 Z" id="path-1"></path>
+        <filter x="-2.8%" y="-0.7%" width="105.6%" height="101.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="2.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.111532998 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="ALL---Wave-Large" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="wave" transform="translate(0.000000, 13.000000)">
+            <g id="Mask-Copy" transform="translate(419.500000, 1548.061807) scale(-1, 1) translate(-419.500000, -1548.061807) ">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#1B998F" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>
