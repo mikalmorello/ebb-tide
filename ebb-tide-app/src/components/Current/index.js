@@ -3,8 +3,8 @@ import "./current.scss";
 
 function Current(){
   return(
-    <article className="current">
-      <section className="current__container">
+    <section className="current">
+      <div className="current__container">
         <div className="current__date"><time>Monday, April 22</time></div>
         <div className="current__tide">High Tide</div>
         <div className="current__time-container">
@@ -13,8 +13,8 @@ function Current(){
           <span className="current__time-post">pm</span>
         </div>
         <div className="current__location">Cape Cod, MA</div>
-      </section> 
-    </article>
+      </div> 
+    </section>
   )
 }
 

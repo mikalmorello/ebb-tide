@@ -1,5 +1,5 @@
-.wave {
-	animation: wave 21s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
+.waves {
+	animation: waves 21s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
 //	background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x; 
 	background: url(/media/wave-large.svg) repeat-x;
 	bottom: 0;
@@ -13,19 +13,19 @@
 	width: 875rem;
 	z-index: 0;
 	&:nth-of-type(2){
-		animation: wave 21s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 14s ease -1.25s infinite;
+		animation: waves 21s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 14s ease -1.25s infinite;
 		opacity: 1;
 		height: 78vh;
 		z-index: 2;
 	}
 	&:nth-of-type(3){
-		animation: wave 20s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.15s infinite, swell 18s ease -1.5s infinite;
+		animation: waves 20s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.15s infinite, swell 18s ease -1.5s infinite;
 		opacity: 1;
 		z-index: 6;
 	}
 }
 
-@keyframes wave {
+@keyframes waves {
   0% {
     margin-right: 0;
   }

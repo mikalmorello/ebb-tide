@@ -5,7 +5,7 @@ import EbbtideLogo from '../../svg/EbbtideLogo';
 import SearchIcon from '../../svg/SearchIcon';
 
 import "./homepage.scss";
-import "./wave.scss";
+import "./waves.scss";
 import "./form.scss";
 
 function Home(props){
@@ -27,36 +27,36 @@ function Home(props){
   };
   
   return(
-		<div className="homepage">
-			<header className="branding">
-				<EbbtideLogo />
-				<h1><EbbtideWordmark /></h1>
-		    
-			</header>
-			<main className="main">
-				<section>
-					<form className="station-form" onSubmit={handleSubmit} >
-						<input
-							className="station-form__input"
-							onChange={handleChange}
-		          placeholder='tide location...'
-							value={stationInput}
-		
-							type="text"
-						/>
-						<button
-							className="station-form__button"
-							id="button"
-							type="submit"
-						><SearchIcon /></button>
-					</form>
-		      <div className="wave"></div>
-					<div className="wave"></div>
-					<div className="wave"></div>
-				</section>
-			</main>
-			<Footer />
-		</div>
+    <div className="homepage">
+      <header className="branding">
+        <EbbtideLogo />
+        <h1><EbbtideWordmark /></h1>
+      </header>
+      <main className="main">
+        <section>
+          <form className="station-form" onSubmit={handleSubmit} >
+            <input
+              className="station-form__input"
+              onChange={handleChange}
+    placeholder='tide location...'
+              value={stationInput}
+              type="text"
+            />
+            <button
+              className="station-form__button"
+              id="button"
+              type="submit"
+            >
+              <SearchIcon />
+            </button>
+          </form>
+          <div className="waves"></div>
+          <div className="waves"></div>
+          <div className="waves"></div>
+        </section>
+      </main>
+      <Footer />
+    </div>
   )
 }
 

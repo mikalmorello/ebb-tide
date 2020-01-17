@@ -2,9 +2,10 @@ import React from "react";
 import Api from "../Api";
 import Header from "../Header";
 import Current from "../Current";
+import Wave from "../Wave";
 import 'moment-timezone';
 import momentjs from "moment";
-
+import './tide.scss';
 
 function Tide({match}){
 //  console.log(match.params.slug);
@@ -14,13 +15,14 @@ function Tide({match}){
   const [tideDate, setTideDate] = React.useState(initialDate);
   
   return(
-    <>
+    <div className="tide">
       <Header />
-      <section>
+      <main className="main">
         <Current /> 
-        <Api station={station} tideDate={tideDate}/> 
-      </section>
-    </>
+    {/*<Api station={station} tideDate={tideDate}/>*/} 
+        <Wave /> 
+      </main>
+    </div>
   )
 }
 
