@@ -1,6 +1,27 @@
 .header {
-	align-items: center;
-  background: teal;
-	justify-content: center;
-	grid-area: header;
+  align-items: center;
+  color: black;
+  fill: black;
+  grid-area: header;
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 75rem;
+    padding: 1rem;
+  }
+  &__menu {
+    justify-self: flex-start;
+  }
+  &__logo {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+  }
+  &__search {
+    justify-self: flex-end;
+  }
+  svg {
+    fill: black;
+  }
 }

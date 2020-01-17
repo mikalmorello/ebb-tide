@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="45px" height="35px" viewBox="0 0 45 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>wave</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PHONE---Station-Set" transform="translate(-165.000000, -17.000000)" stroke="#262626" stroke-width="4">
+            <g id="Nav">
+                <g id="Logo-black" transform="translate(165.000000, 19.000000)">
+                    <g id="wave">
+                        <g id="Group" transform="translate(0.500000, 1.500000)">
+                            <path d="M7.17274464,34.8663572 C34.2196276,47.7758476 7.72250772,-5.63977921 34.7693907,7.26971115" id="wave" transform="translate(20.971068, 21.068034) rotate(-315.000000) translate(-20.971068, -21.068034) "></path>
+                        </g>
+                        <g id="Group" transform="translate(4.500000, 0.500000)">
+                            <path d="M0,8.25 C9.8615175,36.8288383 28.6384825,-20.3288383 38.5,8.25" id="wave"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

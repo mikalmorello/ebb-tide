@@ -15,7 +15,7 @@ function SearchIcon(){
         strokeWidth="1"
         transform="translate(-321 -377) translate(315 372)"
       >
-        <g stroke="#FFF" strokeWidth="2" transform="matrix(-1 0 0 1 25 6)">
+        <g stroke="#000" strokeWidth="2" transform="matrix(-1 0 0 1 25 6)">
           <circle cx="9.984" cy="8" r="8"></circle>
           <path strokeLinecap="round" d="M4.043 14.76L0.507 18.296"></path>
         </g>

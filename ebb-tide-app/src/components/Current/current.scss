@@ -1,0 +1,48 @@
+@import "../../styles/_colors.scss";  
+
+.current {
+  &__container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: .5rem 1rem;
+    text-transform: uppercase;
+  }
+  &__date {
+    font-size: .625rem;
+    font-weight: bold;
+    letter-spacing: .075em;
+    margin-bottom: .75rem;
+  }
+  &__tide {
+    font-size: 1.75rem;
+  }
+  &__time-container {
+    align-items: center;
+    display: flex;
+    margin-bottom: .5rem;
+  }
+  &__time-pre {
+    font-size: 1.25rem;
+    letter-spacing: .075em;
+    padding: .25rem;
+  }
+  &__time {
+    font-size: 3.75rem;
+    letter-spacing: .075em;
+  }
+  &__time-post {
+    font-size: 1.25rem;
+    letter-spacing: .075em;
+    padding: .25rem;
+  }
+  &__location {
+    background: $sand;
+    border-radius: .25rem;
+    font-size: .875rem;
+    font-weight: bold;
+    letter-spacing: .05em;
+    padding: .5rem;
+  }
+}
