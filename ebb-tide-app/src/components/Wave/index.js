@@ -7,7 +7,7 @@ function Wave(){
   return(
     <section className="wave">
       <div className="wave__header">
-        <div className="wave__header-unitheight">
+        <div className="wave__header-tide">
           <TideDirectionIcon /> 0.12<span className="wave__header-unit">ft</span>
         </div>
         <div className="wave__header-label">
