@@ -17,11 +17,28 @@
     width: 100%;
   }
   &__header-tide {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: row;
+  }
+  &__tide-direction {
+    &.high {
+      transform: rotate(0deg);
+      transition: 1s ease-in-out;
+    }
+    &.low {
+      transform: rotate(180deg);
+      transition: 1s ease-in-out;
+    }
+  }
+  &__tide-height {
+    padding-left: .25rem;
     
   }
   &__header-unit {
     font-size: 0.875rem;
     font-weight: bold;
+    padding-bottom: .2rem;
     padding-left: .2rem;
   }
   &__header-label {
