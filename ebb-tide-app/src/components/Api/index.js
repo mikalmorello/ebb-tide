@@ -47,11 +47,11 @@ function Api() {
   const isLoading = useSelector(appState => appState.api.isLoading);
 	
 	// Determine date range based upon selected date
-	React.useEffect(() => {
-      const previousDay = momentjs(tideDate).subtract(1, 'days').format('YYYYMMD'),
-            nextDay = momentjs(tideDate).add(1, 'days').format('YYYYMMD');
-      dispatchRedux({ type: "setStartDate", payload: previousDay });
-      dispatchRedux({ type: "setEndDate", payload: nextDay });
+  React.useEffect(() => {
+    const previousDay = momentjs(tideDate).subtract(1, 'days').format('YYYYMMD'),
+          nextDay = momentjs(tideDate).add(1, 'days').format('YYYYMMD');
+    dispatchRedux({ type: "setStartDate", payload: previousDay });
+    dispatchRedux({ type: "setEndDate", payload: nextDay });
   }, [startDate, endDate, tideDate]);
 
   
@@ -67,29 +67,29 @@ function Api() {
   }, [station, startDate, endDate ]);
 	
 	
-	// Determine previous and next tides based off API call
-	React.useEffect(() => {
-      if(tideData) {
-        tideData.predictions.map((tide, index) => {
-          let tideTime = momentjs(tide.t);
-          let timeDiff = tideTime.diff(tideDate);
+  // Determine previous and next tides based off API call
+  React.useEffect(() => {
+    if(tideData) {
+      tideData.predictions.map((tide, index) => {
+        let tideTime = momentjs(tide.t);
+        let timeDiff = tideTime.diff(tideDate);
 
-          // Find the next tide, set tide array index
-          if((timeDiff > 0) && (timeDiff < 22350000)){
-            dispatchRedux({ type: "setNextTide", payload: tideData.predictions[index] });
-          }
+        // Find the next tide, set tide array index
+        if((timeDiff > 0) && (timeDiff < 22350000)){
+          dispatchRedux({ type: "setNextTide", payload: tideData.predictions[index] });
+        }
 
-          // Find the previous tide, set tide array index									 
-          if((timeDiff < 0) && (timeDiff > -22350000)){
-            dispatchRedux({ type: "setPreviousTide", payload: tideData.predictions[index] });
-          }
-        });
-      }
-   }, [tideData, tideDate]);
+        // Find the previous tide, set tide array index									 
+        if((timeDiff < 0) && (timeDiff > -22350000)){
+          dispatchRedux({ type: "setPreviousTide", payload: tideData.predictions[index] });
+        }
+      });
+    }
+  }, [tideData, tideDate]);
 	
 	
-	// Set Tide Direction
-	React.useEffect(() => {
+  // Set Tide Direction
+  React.useEffect(() => {
     if(previousTide){
       if(previousTide === 'L') {
         dispatchRedux({ type: "setTideDirection", payload: 1 });
@@ -100,7 +100,7 @@ function Api() {
   }, [previousTide]);
 	
 	
-	// Call Station API
+  // Call Station API
   React.useEffect(() => {
     if(station){
       (async () => {
@@ -111,8 +111,8 @@ function Api() {
   }, [station]);
 	
 	
-	// Set Station Name
-	React.useEffect(() => {
+  // Set Station Name
+  React.useEffect(() => {
     if(stationData){
       let tempStationName = stationData.stations[0].name,
 		tempStationState = stationData.stations[0].state;
