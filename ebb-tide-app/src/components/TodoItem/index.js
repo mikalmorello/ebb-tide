@@ -1,10 +1,9 @@
 import React from "react";
 
-function TodoItem({stationName}) {
-
+function TodoItem({newStationName,newStationId}) {
   return (
 		<div>
-			{stationName}
+			{newStationName}
 		</div>
   );
 }

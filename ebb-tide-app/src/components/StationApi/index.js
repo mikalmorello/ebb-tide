@@ -18,12 +18,13 @@ function searchStationList(searchInput, stationList){
 	let matches = [];
 	var reg = new RegExp(searchInput.split('').join('\\w*').replace(/\W/, ""), 'i');
 		stationList.stations.map((station, index) => {
-//				console.log(station.name);
 			if (station.name.match(reg)) {
-//				console.log(station.name);
-				matches.push(station.name);
+					var newStation = new Object();
+					newStation.name = station.name;
+					newStation.id = station.id;
+					matches.push(newStation);
+//				matches.push(station.name);
 			}
-			
 		});
 	return matches;
 }
@@ -65,13 +66,6 @@ function StationApi({stationInput}) {
   React.useEffect(() => {
     if(stationInput){
 			let stationMatch = searchStationList(stationInput, stationData);
-//			let stationz = '';
-//			console.log(stationMatch);
-//			stationMatch.map((station, index) => {
-//				stationz += `<div>${station}</div>`;
-//			});
-//			console.log(stationz); 
-			console.log(stationMatch);
 			setStationMatches(stationMatch);
     }
   }, [stationInput]);
@@ -80,10 +74,11 @@ function StationApi({stationInput}) {
   // Active state after api has run
   return (
 		<div className="autocomplete-items">
-		 	{stationMatches.map((stationName, index) => (
+		 	{stationMatches.map((newStation, index) => (
           <TodoItem 
 			 			key={index}
-						stationName={stationName}
+						newStationName={newStation.name}
+						newStationId={newStation.id}
 			  	/>
         ))}
 		</div>
