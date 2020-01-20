@@ -43,7 +43,6 @@ function Api() {
   const stationData = useSelector(appState => appState.api.stationData);
   const stationName = useSelector(appState => appState.api.stationName);
   const tideDirection = useSelector(appState => appState.api.tideDirection);
-//  const currentTime = useSelector(appState => appState.api.currentTime);
   const isLoading = useSelector(appState => appState.api.isLoading);
 	
 	// Determine date range based upon selected date
@@ -120,17 +119,6 @@ function Api() {
       dispatchRedux({ type: "setStationName", payload: tempStationFullName });
     }
   }, [stationData]);
-
-	
-//	// Current time
-//  React.useEffect(() => {
-//		window.setInterval(function(){
-////    	setCurrentTime(momentjs(new Date()).format("MMMM D hh:mm a"));
-//        dispatchRedux({ type: "setCurrentTime", payload: momentjs(new Date()).format("MMMM D hh:mm a") });
-//		}, 1000);
-//  });
-	
-	
 
 			
   // Active state after api has run

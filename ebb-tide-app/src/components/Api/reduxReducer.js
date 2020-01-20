@@ -2,17 +2,6 @@ const initialState = {
   isLoading: true
 }
 
-//  const [tideData, setTideData] = React.useState();
-//  const [startDate, setStartDate] = React.useState();
-//  const [endDate, setEndDate] = React.useState();
-//  const [nextTide, setNextTide] = React.useState();
-//  const [previousTide, setPreviousTide] = React.useState();
-//  const [stationData, setStationData] = React.useState();
-//  const [stationName, setStationName] = React.useState();
-//  const [tideDirection, setTideDirection] = React.useState();
-//  const [currentTime, setCurrentTime] = React.useState();
-//  const [isLoading, setIsLoading] = React.useState(true);
-
 export default (prevState = initialState, { type, payload }) => {
   let { 
     isLoading 

@@ -18,6 +18,7 @@ function Wave(){
   let tideHeight = 0;
   let tideDirection = '';
   const [tidePercentage, setTidePercentage] = React.useState(0);
+	const [currentTime, setCurrentTime] = React.useState();
   
   // Format tide height 
   if(nextTide){
@@ -28,12 +29,12 @@ function Wave(){
   
   // Set class for tide direction 
   function setTideClass(tideType) {
-      if(tideType === 'L') {
-        tideDirection = 'low';
-      } else if (tideType === 'H'){
-        tideDirection = 'high';
-      }
-      return tideDirection;
+		if(tideType === 'L') {
+			tideDirection = 'low';
+		} else if (tideType === 'H'){
+			tideDirection = 'high';
+		}
+		return tideDirection;
   }
     
   // Calculate % towards next tide
@@ -46,6 +47,13 @@ function Wave(){
     }
   }, [nextTide]);
   
+		// Current time
+		React.useEffect(() => {
+			window.setInterval(function(){
+	    setCurrentTime(momentjs(new Date()).format("MMMM D hh:mm a"));
+//					dispatchRedux({ type: "setCurrentTime", payload: momentjs(new Date()).format("MMMM D hh:mm a") });
+			}, 1000);
+		});
   
   if (isLoading) {
     return (
@@ -73,7 +81,10 @@ function Wave(){
       <div className="wave__container">
         <div className={`percentage percentage-${tidePercentage}`}>
 					<div className={`tooltip tooltip-${tidePercentage}`}>
-						<span className="tooltip__text">12:15pm</span>
+						<span className="tooltip__text">
+							<span className="tooltip__time"><Moment format="h:mm">{currentTime}</Moment></span>
+							<span className="tooltip__period"><Moment format="a">{currentTime}</Moment></span>
+						</span>
 					</div>
 				</div>
       </div>
