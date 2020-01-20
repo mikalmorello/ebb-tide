@@ -37,7 +37,7 @@ function Home(props){
       <main className="main">
         <section>
           <form className="station-form" onSubmit={handleSubmit} >
-
+						<div className="autocomplete">
 							<input
 								className="station-form__input"
 								onChange={handleChange}
@@ -52,8 +52,8 @@ function Home(props){
 							>
 								<SearchIcon />
 							</button>
-
-		        <StationApi stationInput={stationInput} />
+		        	<StationApi stationInput={stationInput} />
+		        </div>
           </form>
 		      
           <div className="waves"></div>

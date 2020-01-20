@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import TodoItem from '../TodoItem';
 
 
 // Station Data API Call
@@ -37,7 +38,7 @@ function StationApi({stationInput}) {
   // From Tide Redux
   const station = useSelector(appState => appState.tide.station);
 	const [stationData, setStationData] = React.useState();
-	const [stationMatches, setStationMatches] = React.useState();
+	const [stationMatches, setStationMatches] = React.useState([]);
   
 
   // Get Station list from Api 
@@ -64,22 +65,28 @@ function StationApi({stationInput}) {
   React.useEffect(() => {
     if(stationInput){
 			let stationMatch = searchStationList(stationInput, stationData);
-			let stationz = '';
+//			let stationz = '';
+//			console.log(stationMatch);
+//			stationMatch.map((station, index) => {
+//				stationz += `<div>${station}</div>`;
+//			});
+//			console.log(stationz); 
 			console.log(stationMatch);
-			stationMatch.map((station, index) => {
-				stationz += `<div>${station}</div>`;
-			});
-			console.log(stationz); 
-			setStationMatches(stationz);
+			setStationMatches(stationMatch);
     }
   }, [stationInput]);
 
 			
   // Active state after api has run
   return (
-		<main>
-		  {stationMatches}
-		</main>
+		<div className="autocomplete-items">
+		 	{stationMatches.map((stationName, index) => (
+          <TodoItem 
+			 			key={index}
+						stationName={stationName}
+			  	/>
+        ))}
+		</div>
   );
 }
 
