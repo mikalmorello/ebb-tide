@@ -3,6 +3,7 @@ import Footer from "../Footer";
 import EbbtideWordmark from '../../svg/EbbtideWordmark';
 import EbbtideLogo from '../../svg/EbbtideLogo';
 import SearchIcon from '../../svg/SearchIcon';
+import StationApi from '../StationApi';
 
 import "./homepage.scss";
 import "./waves.scss";
@@ -49,7 +50,9 @@ function Home(props){
             >
               <SearchIcon />
             </button>
+		        <StationApi />
           </form>
+		      
           <div className="waves"></div>
           <div className="waves"></div>
           <div className="waves"></div>

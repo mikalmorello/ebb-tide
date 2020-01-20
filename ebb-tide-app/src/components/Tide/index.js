@@ -21,7 +21,6 @@ function Tide({match}){
       <Header />
       <main className="main">
         <Current /> 
-    {/*<Api />*/} 
         <Api />
         <Wave /> 
       </main>
