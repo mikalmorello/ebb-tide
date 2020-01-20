@@ -5,6 +5,7 @@ import Moment from 'react-moment';
 import 'moment-timezone';
 import momentjs from "moment";
 import "./wave.scss";
+import "./tooltip.scss";
 
 function Wave(){
   
@@ -70,7 +71,11 @@ function Wave(){
         </div>
       </div>
       <div className="wave__container">
-        <div className={`percentage percentage-${tidePercentage}`}></div>
+        <div className={`percentage percentage-${tidePercentage}`}>
+					<div className={`tooltip tooltip-${tidePercentage}`}>
+						<span className="tooltip__text">12:15pm</span>
+					</div>
+				</div>
       </div>
       <div className="wave__footer">
         Low

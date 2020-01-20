@@ -54,7 +54,7 @@ function Current(){
         <div className="current__time-container">
           <span className="current__time-pre">at</span>
           <time className="current__time">
-            <Moment format="hh:mm">{nextTide.t}</Moment>
+            <Moment format="h:mm">{nextTide.t}</Moment>
           </time>
           <span className="current__time-post">
             <Moment format="a">{nextTide.t}</Moment>
