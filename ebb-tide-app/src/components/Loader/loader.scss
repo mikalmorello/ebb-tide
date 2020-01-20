@@ -1,0 +1,43 @@
+@keyframes wave {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		background-position: 136px 0;
+	}
+}
+.loader-container {
+//	background: black;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	width: 100px;
+	height: 100px;
+		padding: 1.5rem;
+	border: 2px solid black;
+	overflow: hidden;
+   position: fixed;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -30%);
+}
+.loader {
+//	background: black;
+	width:136px;
+	margin:2rem auto;
+	position:relative;
+	height: 46px;
+	background: url('/media/wave-loader-3.svg') repeat-x 0%;
+//	background-size: contain;
+	animation: 5s wave linear infinite;
+	box-shadow:inner 0 0 1rem rgba(red,1);
+
+	
+	&::before{
+		content:"";
+		background:linear-gradient(90deg, rgba(white,0) 25%, rgba(white,1) 75%);
+		height:100%;
+		width:100%;
+//		@include absolute(0,0);
+	}
+}

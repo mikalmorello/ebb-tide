@@ -1,8 +1,15 @@
 import React from "react";
+import WaveLoader from '../../svg/WaveLoader';
+import "./loader.scss";
+
+
 
 function Loader(){
   return(
-    <div>Loading...</div>
+		<div className="loader-container">
+			<div className="loader">
+			</div>
+		</div>
   )
 }
 
