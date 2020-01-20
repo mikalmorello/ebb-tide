@@ -10,9 +10,26 @@ const fetchStationData = async () => {
   return json;
 };
 
+
+
+function searchStationList(searchInput, stationList){
+	console.log('////////////////// searhc input ' + searchInput);
+	let matches = [];
+	var reg = new RegExp(searchInput.split('').join('\\w*').replace(/\W/, ""), 'i');
+		stationList.stations.map((station, index) => {
+//				console.log(station.name);
+			if (station.name.match(reg)) {
+//				console.log(station.name);
+				matches.push(station.name);
+			}
+			
+		});
+	return matches;
+}
+
 // API Functionality
 
-function StationApi() {
+function StationApi({stationInput}) {
   
   // Redux function variable
   const dispatchRedux = useDispatch();
@@ -20,6 +37,7 @@ function StationApi() {
   // From Tide Redux
   const station = useSelector(appState => appState.tide.station);
 	const [stationData, setStationData] = React.useState();
+	const [stationMatches, setStationMatches] = React.useState();
   
 
   // Get Station list from Api 
@@ -32,22 +50,35 @@ function StationApi() {
   }, []);
 
 	
-	
   // Set Station Name
   React.useEffect(() => {
     if(stationData){
 			console.log(stationData);
 			stationData.stations.map((station, index) => {
-				console.log(station.name);
+//				console.log(station.name);
 			});
     }
   }, [stationData]);
+	
+	// Check station input
+  React.useEffect(() => {
+    if(stationInput){
+			let stationMatch = searchStationList(stationInput, stationData);
+			let stationz = '';
+			console.log(stationMatch);
+			stationMatch.map((station, index) => {
+				stationz += `<div>${station}</div>`;
+			});
+			console.log(stationz); 
+			setStationMatches(stationz);
+    }
+  }, [stationInput]);
 
 			
   // Active state after api has run
   return (
 		<main>
-		  xxx
+		  {stationMatches}
 		</main>
   );
 }

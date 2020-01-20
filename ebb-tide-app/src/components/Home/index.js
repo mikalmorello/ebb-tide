@@ -10,7 +10,8 @@ import "./waves.scss";
 import "./form.scss";
 
 function Home(props){
-  const initialStation = "8447505";
+//  const initialStation = "8447505";
+	const initialStation = "";
   const [station, setStation] = React.useState(initialStation);
   const [stationInput, setStationInput] = React.useState(initialStation);
   
@@ -36,21 +37,23 @@ function Home(props){
       <main className="main">
         <section>
           <form className="station-form" onSubmit={handleSubmit} >
-            <input
-              className="station-form__input"
-              onChange={handleChange}
-              placeholder='tide location...'
-              value={stationInput}
-              type="text"
-            />
-            <button
-              className="station-form__button"
-              id="button"
-              type="submit"
-            >
-              <SearchIcon />
-            </button>
-		        <StationApi />
+
+							<input
+								className="station-form__input"
+								onChange={handleChange}
+								placeholder='tide location...'
+								value={stationInput}
+								type="text"
+							/>
+							<button
+								className="station-form__button"
+								id="button"
+								type="submit"
+							>
+								<SearchIcon />
+							</button>
+
+		        <StationApi stationInput={stationInput} />
           </form>
 		      
           <div className="waves"></div>
