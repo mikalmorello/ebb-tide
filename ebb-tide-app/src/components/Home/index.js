@@ -38,7 +38,7 @@ function Home(props){
             <input
               className="station-form__input"
               onChange={handleChange}
-    placeholder='tide location...'
+              placeholder='tide location...'
               value={stationInput}
               type="text"
             />
