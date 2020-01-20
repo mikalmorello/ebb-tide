@@ -70,17 +70,23 @@ function StationApi({stationInput}) {
     }
   }, [stationInput]);
 
+	
+	if(!stationMatches){
+		   return "";
+		 }
 			
   // Active state after api has run
   return (
 		<div className="autocomplete-items">
-		 	{stationMatches.map((newStation, index) => (
-          <TodoItem 
-			 			key={index}
+		 	{
+				stationMatches.map((newStation, index) => (
+					<TodoItem 
+						key={index}
 						newStationName={newStation.name}
 						newStationId={newStation.id}
-			  	/>
-        ))}
+					/>
+				))
+			}
 		</div>
   );
 }

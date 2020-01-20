@@ -4,27 +4,34 @@ import EbbtideWordmark from '../../svg/EbbtideWordmark';
 import EbbtideLogo from '../../svg/EbbtideLogo';
 import SearchIcon from '../../svg/SearchIcon';
 import StationApi from '../StationApi';
+import { useSelector, useDispatch } from "react-redux";
 
 import "./homepage.scss";
 import "./waves.scss";
 import "./form.scss";
 
 function Home(props){
-//  const initialStation = "8447505";
-	const initialStation = "";
-  const [station, setStation] = React.useState(initialStation);
-  const [stationInput, setStationInput] = React.useState(initialStation);
+	
+	// Redux function variable
+  const dispatchRedux = useDispatch();
   
+	// From API Redux
+  const station = useSelector(appState => appState.home.station);
+	const stationInput = useSelector(appState => appState.home.stationInput);
+	
+	
   // Handle Form Change
   const handleChange = e => {
     const newTypedStation = e.target.value;
-    setStationInput(newTypedStation);
+//    setStationInput(newTypedStation);
+		dispatchRedux({ type: "setStationInput", payload: newTypedStation });
   };
 
   // Handle Form Submit
   const handleSubmit = async e => {
     e.preventDefault();
-    setStation(stationInput);
+//    setStation(stationInput);
+		dispatchRedux({ type: "setStation", payload: stationInput });
     props.history.push(`/tide/${station}`);
   };
   
