@@ -5,7 +5,7 @@ const initialState = {
 export default (prevState = initialState, { type, payload }) => {
   let { 
     isLoading 
-      } = prevState;
+  } = prevState;
   switch (type) {
     case "setTideData":
       return { ...prevState, tideData: payload }

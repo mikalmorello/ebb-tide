@@ -1,6 +1,4 @@
 import React from "react";
-import Loader from "../Loader";
-import Moment from 'react-moment';
 import 'moment-timezone';
 import momentjs from "moment";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 // High / Low Tide Data API Call
 const fetchData = async (station, startDate, endDate) => {
   const fetchUrl=`https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS.COOPS.TAC.WL&begin_date=${startDate}&end_date=${endDate}&datum=MLLW&station=${station}&time_zone=lst_ldt&units=english&interval=hilo&format=json`
-  console.log(fetchUrl);
+//  console.log(fetchUrl);
   const response = await fetch(fetchUrl);
   const json = await response.json();
   return json;
@@ -22,9 +20,6 @@ const fetchStationData = async (station) => {
   return json;
 };
 
-// API Functionality
-
-//function Api({station, tideDate}) {
 function Api() {
   
   // Redux function variable
@@ -38,20 +33,17 @@ function Api() {
   const tideData = useSelector(appState => appState.api.tideData);
   const startDate = useSelector(appState => appState.api.startDate);
   const endDate = useSelector(appState => appState.api.endDate);
-  const nextTide = useSelector(appState => appState.api.nextTide); 
   const previousTide = useSelector(appState => appState.api.previousTide);
   const stationData = useSelector(appState => appState.api.stationData);
-  const stationName = useSelector(appState => appState.api.stationName);
-  const tideDirection = useSelector(appState => appState.api.tideDirection);
-  const isLoading = useSelector(appState => appState.api.isLoading);
+
 	
-	// Determine date range based upon selected date
+  // Determine date range based upon selected date
   React.useEffect(() => {
     const previousDay = momentjs(tideDate).subtract(1, 'days').format('YYYYMMD'),
           nextDay = momentjs(tideDate).add(1, 'days').format('YYYYMMD');
     dispatchRedux({ type: "setStartDate", payload: previousDay });
     dispatchRedux({ type: "setEndDate", payload: nextDay });
-  }, [startDate, endDate, tideDate]);
+  }, [startDate, endDate, tideDate, dispatchRedux]);
 
   
   // Call High / Low tide API 
@@ -63,7 +55,7 @@ function Api() {
         dispatchRedux({ type: "setIsLoading", payload: false });
       })();
     }
-  }, [station, startDate, endDate ]);
+  }, [station, startDate, endDate, dispatchRedux ]);
 	
 	
   // Determine previous and next tides based off API call
@@ -84,7 +76,7 @@ function Api() {
         }
       });
     }
-  }, [tideData, tideDate]);
+  }, [tideData, tideDate, dispatchRedux]);
 	
 	
   // Set Tide Direction
@@ -96,7 +88,7 @@ function Api() {
         dispatchRedux({ type: "setTideDirection", payload: 0 });
       }
     }
-  }, [previousTide]);
+  }, [previousTide, dispatchRedux]);
 	
 	
   // Call Station API
@@ -107,7 +99,7 @@ function Api() {
         dispatchRedux({ type: "setStationData", payload: incomingData });
       })();
     }
-  }, [station]);
+  }, [station, dispatchRedux]);
 	
 	
   // Set Station Name
@@ -118,13 +110,13 @@ function Api() {
       let tempStationFullName = `${tempStationName}, ${tempStationState}`;
       dispatchRedux({ type: "setStationName", payload: tempStationFullName });
     }
-  }, [stationData]);
+  }, [stationData, dispatchRedux]);
 
 			
   // Active state after api has run
   return (
-		<main>
-		</main>
+    <>
+    </>
   );
 }
 

@@ -1,15 +1,19 @@
 const initialState = {
-  initialStation: ""
+  initialStation: '',
+  stationInput: '',
+  station: '',
 }
 
 // initial station 8447505
 
 export default (prevState = initialState, { type, payload }) => {
   let { 
-    initialStation 
-      } = prevState;
+    initialStation,
+    stationInput,
+    station
+  } = prevState;
   switch (type) {
-    case "setStation":
+    case "setHomeStation":
       return { ...prevState, station: payload }
     case "setStationInput":
       return { ...prevState, stationInput: payload }

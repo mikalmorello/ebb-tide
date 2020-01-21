@@ -3,7 +3,7 @@ import Api from "../Api";
 import Header from "../Header";
 import Current from "../Current";
 import Wave from "../Wave";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import 'moment-timezone';
 import momentjs from "moment";
 import './tide.scss';

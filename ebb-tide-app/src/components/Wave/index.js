@@ -18,13 +18,12 @@ function Wave(){
   let tideHeight = 0;
   let tideDirection = '';
   const [tidePercentage, setTidePercentage] = React.useState(1);
-	const [currentTime, setCurrentTime] = React.useState();
+  const [currentTime, setCurrentTime] = React.useState();
   
   // Format tide height 
   if(nextTide){
     tideHeight = Number(nextTide.v);
     tideHeight = tideHeight.toFixed(2);
-    console.log(tideHeight);
   }
   
   // Set class for tide direction 
@@ -40,14 +39,14 @@ function Wave(){
   // Calculate % towards next tide
   React.useEffect(() => {
     if(nextTide){
-			setTimeout(() => {
-				let tideTime = momentjs(nextTide.t);
-				let timeDiff = tideTime.diff(tideDate);
-				let timePercentage = ((22350000 - timeDiff) / 22350000).toFixed(2) * 100;
-				setTidePercentage(timePercentage);
-			}, 10);
+      setTimeout(() => {
+        let tideTime = momentjs(nextTide.t);
+        let timeDiff = tideTime.diff(tideDate);
+        let timePercentage = (((22350000 - timeDiff) / 22350000) * 100).toFixed(0);
+        setTidePercentage(timePercentage);
+      }, 10);
     }
-  }, [nextTide]);
+  }, [nextTide, tideDate]);
   
 		// Current time
 		React.useEffect(() => {

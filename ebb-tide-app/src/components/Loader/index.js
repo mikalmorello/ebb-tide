@@ -1,5 +1,4 @@
 import React from "react";
-import WaveLoader from '../../svg/WaveLoader';
 import "./loader.scss";
 
 

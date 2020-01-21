@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector} from "react-redux";
 import Moment from 'react-moment';
 import 'moment-timezone';
-import momentjs from "moment";
 import Loader from "../Loader";
 import "./current.scss";
 
@@ -17,19 +16,8 @@ function formatTideType(tideType) {
 	return tideType;
 }
 
-// Readable label for tide direction
-function formatTideDirection(tideDirection){
-  if(tideDirection) {
-    return 'Tide is coming in';
-  } else {
-    return 'Tide is going out';
-  }
-}
-
 
 function Current(){
-  // From Tide Redux
-  const station = useSelector(appState => appState.tide.station);
   
   // From API Redux
   const nextTide = useSelector(appState => appState.api.nextTide); 

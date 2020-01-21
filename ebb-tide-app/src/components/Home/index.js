@@ -12,27 +12,23 @@ import "./form.scss";
 
 function Home(props){
 	
-	// Redux function variable
+  // Redux function variable
   const dispatchRedux = useDispatch();
   
-	// From API Redux
-  const station = useSelector(appState => appState.home.station);
-	const stationInput = useSelector(appState => appState.home.stationInput);
-	
-	
+  // From API Redux
+  const stationInput = useSelector(appState => appState.home.stationInput); 	
+
   // Handle Form Change
   const handleChange = e => {
     const newTypedStation = e.target.value;
-//    setStationInput(newTypedStation);
-		dispatchRedux({ type: "setStationInput", payload: newTypedStation });
+    dispatchRedux({ type: "setStationInput", payload: newTypedStation });
   };
 
   // Handle Form Submit
   const handleSubmit = async e => {
     e.preventDefault();
-//    setStation(stationInput);
-		dispatchRedux({ type: "setStation", payload: stationInput });
-    props.history.push(`/tide/${station}`);
+    dispatchRedux({ type: "setHomeStation", payload: stationInput });
+    props.history.push(`/tide/${stationInput}`);
   };
   
   return(
@@ -44,23 +40,24 @@ function Home(props){
       <main className="main">
         <section>
           <form className="station-form" onSubmit={handleSubmit} >
-						<div className="autocomplete">
-							<input
-								className="station-form__input"
-								onChange={handleChange}
-								placeholder='tide location...'
-								value={stationInput}
-								type="text"
-							/>
-							<button
-								className="station-form__button"
-								id="button"
-								type="submit"
-							>
-								<SearchIcon />
-							</button>
-		        	<StationApi stationInput={stationInput} />
-		        </div>
+            <div className="autocomplete">
+              <input
+                className="station-form__input"
+                onChange={handleChange}
+                placeholder='tide location...'
+                value={stationInput}
+                type="text"
+              />
+              <button
+                className="station-form__button"
+                id="button"
+                type="submit"
+              >
+                <SearchIcon />
+              </button>
+    {/*<StationApi stationInput={stationInput} />*/}
+    <StationApi stationInput={stationInput} />
+            </div>
           </form>
 		      
           <div className="waves"></div>
