@@ -42,8 +42,18 @@ function Wave(){
       setTimeout(() => {
         let tideTime = momentjs(nextTide.t);
         let timeDiff = tideTime.diff(tideDate);
-        let timePercentage = (((22350000 - timeDiff) / 22350000) * 100).toFixed(0);
-        setTidePercentage(timePercentage);
+        if(nextTide.type === 'L') {
+			console.log('low tide next');
+          let timePercentage = Math.abs((((22350000 - timeDiff) / 22350000) * 100) - 100).toFixed(0);
+          setTidePercentage(timePercentage);
+		} else if (nextTide.type === 'H'){
+			console.log('high tide next');
+          let timePercentage = (((22350000 - timeDiff) / 22350000) * 100).toFixed(0);
+          setTidePercentage(timePercentage);
+		}
+        
+       
+        
       }, 10);
     }
   }, [nextTide, tideDate]);
