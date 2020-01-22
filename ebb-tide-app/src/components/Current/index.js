@@ -29,6 +29,13 @@ function Current(){
       <Loader />
     )
   } 
+  
+  // If station data is not defined
+  if (typeof nextTide == 'undefined'){
+      return (
+        <div>Station does not have data, please try another location</div>
+      )
+  } 
       
   return(
     <section className="current">
@@ -54,6 +61,7 @@ function Current(){
       </div> 
     </section>
   )
+  
 }
 
 export default Current;

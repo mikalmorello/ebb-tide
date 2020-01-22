@@ -10,7 +10,6 @@ function App() {
       <Route exact path="/" component={Home} />
       <Route exact path="/tide" component={Tide} />
       <Route exact path="/tide/:slug" component={Tide} />
-//      <Redirect to="/" />
     </Router>
   )
 }

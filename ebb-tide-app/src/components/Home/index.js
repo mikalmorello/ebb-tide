@@ -40,7 +40,6 @@ function Home(props){
   const handleSubmit = async e => {
     e.preventDefault();
     dispatchRedux({ type: "setHomeStation", payload: stationInput });
-    console.log(stationData);
     stationMatch(stationInput, stationData, props);
   };
   

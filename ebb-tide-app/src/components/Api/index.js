@@ -60,7 +60,8 @@ function Api() {
 	
   // Determine previous and next tides based off API call
   React.useEffect(() => {
-    if(tideData) {
+    console.log(tideData);
+    if(tideData && tideData.predictions) {
       tideData.predictions.map((tide, index) => {
         let tideTime = momentjs(tide.t);
         let timeDiff = tideTime.diff(tideDate);
@@ -75,6 +76,8 @@ function Api() {
           dispatchRedux({ type: "setPreviousTide", payload: tideData.predictions[index] });
         }
       });
+    } else {
+      console.log('no tide data');
     }
   }, [tideData, tideDate, dispatchRedux]);
 	
