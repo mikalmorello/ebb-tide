@@ -1,7 +1,6 @@
 import React from "react";
-import { useSelector} from "react-redux";
 import StationList from '../StationList';
-
+import { useSelector, useDispatch } from "react-redux";
 
 // Station Data API Call
 const fetchStationData = async () => {
@@ -29,17 +28,20 @@ function searchStationList(searchInput, stationList){
 
 function StationApi() {
   
+  // Redux function variable
+  const dispatchRedux = useDispatch();
+  
   // From Home Redux
   const stationInput = useSelector(appState => appState.home.stationInput);
-  const [stationData, setStationData] = React.useState();
+  const stationData = useSelector(appState => appState.station.stationData);
   const [stationMatches, setStationMatches] = React.useState([]);
   
 
   // Get Station list from Api 
   React.useEffect(() => {
     (async () => {
-      const incomingData = await fetchStationData();
-      setStationData(incomingData);	
+      const incomingData = await fetchStationData();	
+      dispatchRedux({ type: "setStationData", payload: incomingData });
     })();
   }, []);
 

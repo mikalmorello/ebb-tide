@@ -10,13 +10,25 @@ import "./homepage.scss";
 import "./waves.scss";
 import "./form.scss";
 
+
+
+function stationMatch(formInput, stationList, props){
+    stationList.stations.map((station, index) => {
+      if((formInput === station.name) || (formInput === station.id)) {
+        props.history.push(`/tide/${station.id}`);
+      }
+    });
+}
+
+
 function Home(props){
 	
   // Redux function variable
   const dispatchRedux = useDispatch();
   
   // From API Redux
-  const stationInput = useSelector(appState => appState.home.stationInput); 	
+  const stationInput = useSelector(appState => appState.home.stationInput); 
+  const stationData = useSelector(appState => appState.station.stationData);
 
   // Handle Form Change
   const handleChange = e => {
@@ -28,7 +40,8 @@ function Home(props){
   const handleSubmit = async e => {
     e.preventDefault();
     dispatchRedux({ type: "setHomeStation", payload: stationInput });
-    props.history.push(`/tide/${stationInput}`);
+    console.log(stationData);
+    stationMatch(stationInput, stationData, props);
   };
   
   return(
