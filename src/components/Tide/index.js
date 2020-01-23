@@ -24,8 +24,8 @@ function Tide({match}){
     <div className="tide">
       <Header />
       <main className="main">
+				<Api />
         <Current /> 
-        <Api />
         <Wave /> 
       </main>
     </div>

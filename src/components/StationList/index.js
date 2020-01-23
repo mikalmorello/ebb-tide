@@ -10,8 +10,8 @@ function StationList({newStationName}) {
 	
 	// Station View
   return (
-    <div className="autocomplete__item" onClick={() => dispatchRedux({ type: "setStationInput", payload: newStationName })}>
-    	{newStationName}
+    <div className="autocomplete__item" onClick={() => dispatchRedux({ type: "setStationInput", payload: newStationName.toLowerCase() })}>
+    	{newStationName.toLowerCase()}
     </div>
   );
 

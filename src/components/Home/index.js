@@ -13,7 +13,8 @@ import "./form.scss";
 // Station Match
 function stationMatch(formInput, stationList, props){
 	stationList.stations.map((station, index) => {
-		if((formInput === station.name) || (formInput === station.id)) {
+		console.log((station.name).toLowerCase());
+		if((formInput.toLowerCase() === (station.name).toLowerCase()) || (formInput === station.id)) {
 			props.history.push(`/tide/${station.id}`);
 		}
 	});
@@ -28,17 +29,19 @@ function Home(props){
   // Redux State
   const stationInput = useSelector(appState => appState.home.stationInput),
 				stationData = useSelector(appState => appState.station.stationData);
+	
+	console.log(stationInput);
 
   // Handle Form Change
   const handleChange = e => {
-    const newTypedStation = e.target.value;
+    const newTypedStation = (e.target.value).toLowerCase();
     dispatchRedux({ type: "setStationInput", payload: newTypedStation });
   };
 
   // Handle Form Submit
   const handleSubmit = async e => {
     e.preventDefault();
-    dispatchRedux({ type: "setHomeStation", payload: stationInput });
+    dispatchRedux({ type: "setHomeStation", payload: stationInput.toLowerCase() });
     stationMatch(stationInput, stationData, props);
   };
   
@@ -67,7 +70,7 @@ function Home(props){
               >
                 <SearchIcon />
               </button>
-    					<StationApi stationInput={stationInput} />
+    					<StationApi />
             </div>
           </form>
           <div className="waves"></div>
