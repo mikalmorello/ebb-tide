@@ -1,5 +1,9 @@
+/* Wave Module */
+
+// Imports
 @import "../../styles/_colors.scss";  
 
+// Wave
 .wave {
   display: flex;
   flex-direction: column;
@@ -57,17 +61,9 @@
   }
 }
 
-//https://css-tricks.com/making-charts-with-css/
-
+// Percentage
 .percentage {
-//  background: repeating-linear-gradient(
-//    to top,
-//    white,
-//    white 1px,
-//    transparent 1px,
-//    transparent 8.33%
-//  );
-//  background: url("/media/wave-small.svg");
+	//  background: repeating-linear-gradient( to top, white, white 1px, transparent 1px,transparent 8.33% );
   font-size: .8em;
   height: 100%;
   line-height: 1;
@@ -76,7 +72,6 @@
   text-transform: uppercase;
   width: 100%;
   &:after {
-//    background-color: #1B998F;
     background: url("/media/wave-small.svg");
 		background-repeat: repeat-x;
     content: "";
@@ -86,12 +81,12 @@
     position: relative;
     top: 100%;
     transform: translateY(-100%);
-//    transition: all .3s ease;
 		transition: all 2s ease;
     width: 100%;
   }
 }
 
+// Provide a percentage modifier class
 @for $i from 1 through 100 {
   .percentage-#{$i} {
     &:after {

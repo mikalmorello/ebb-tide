@@ -2,17 +2,19 @@ import React from "react";
 import StationList from '../StationList';
 import { useSelector, useDispatch } from "react-redux";
 
+
 // Station Data API Call
 const fetchStationData = async () => {
-  const fetchUrl=`https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations.json?type=datums&units=english`
-  const response = await fetch(fetchUrl);
-  const json = await response.json();
+  const fetchUrl=`https://tidesandcurrents.noaa.gov/mdapi/latest/webapi/stations.json?type=datums&units=english`,
+				response = await fetch(fetchUrl),
+				json = await response.json();
   return json;
 };
 
+// Search Station List
 function searchStationList(searchInput, stationList){
   let matches = [];
-  var reg = new RegExp(searchInput.split('').join('\\w*').replace(/\W/, ""), 'i');
+  const reg = new RegExp(searchInput.split('').join('\\w*').replace(/\W/, ""), 'i');
     stationList.stations.map((station, index) => {
       if (station.name.match(reg)) {
         let newStation = new Object();
@@ -24,19 +26,19 @@ function searchStationList(searchInput, stationList){
   return matches;
 }
 
-// API Functionality
-
+// STATION API
 function StationApi() {
   
-  // Redux function variable
+  // Redux function
   const dispatchRedux = useDispatch();
   
-  // From Home Redux
-  const stationInput = useSelector(appState => appState.home.stationInput);
-  const stationData = useSelector(appState => appState.station.stationData);
+  // Redux State
+  const stationInput = useSelector(appState => appState.home.stationInput),
+				stationData = useSelector(appState => appState.station.stationData);
+	
+	// Local State
   const [stationMatches, setStationMatches] = React.useState([]);
   
-
   // Get Station list from Api 
   React.useEffect(() => {
     (async () => {
@@ -44,7 +46,6 @@ function StationApi() {
       dispatchRedux({ type: "setStationData", payload: incomingData });
     })();
   }, []);
-
 	
   // Set Station Name
   React.useEffect(() => {
@@ -62,17 +63,17 @@ function StationApi() {
     }
   }, [stationInput, stationData]);
 
-  // If not station matches, return empty
+  // If no station matches, return empty
   if(!stationMatches){
     return "";
   }
 			
-  // Active state after api has run
+  // Station List View
   return (
-    <div className="autocomplete-items">
+    <div className="autocomplete__items">
       {
         stationMatches.map((newStation, index) => (
-          <StationList 
+        	<StationList 
             key={index}
             newStationName={newStation.name}
             newStationId={newStation.id}
@@ -82,6 +83,5 @@ function StationApi() {
     </div>
   );
 }
-
 
 export default StationApi;

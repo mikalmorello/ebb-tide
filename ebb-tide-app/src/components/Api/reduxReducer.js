@@ -1,7 +1,11 @@
+/* Redux Reducer */
+
+// Initial State
 const initialState = {
   isLoading: true
 }
 
+// Reducer
 export default (prevState = initialState, { type, payload }) => {
   let { 
     isLoading 

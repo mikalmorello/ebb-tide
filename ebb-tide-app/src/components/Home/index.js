@@ -1,34 +1,33 @@
 import React from "react";
 import Footer from "../Footer";
+import { useSelector, useDispatch } from "react-redux";
 import EbbtideWordmark from '../../svg/EbbtideWordmark';
 import EbbtideLogo from '../../svg/EbbtideLogo';
 import SearchIcon from '../../svg/SearchIcon';
 import StationApi from '../StationApi';
-import { useSelector, useDispatch } from "react-redux";
-
 import "./homepage.scss";
 import "./waves.scss";
 import "./form.scss";
 
 
-
+// Station Match
 function stationMatch(formInput, stationList, props){
-    stationList.stations.map((station, index) => {
-      if((formInput === station.name) || (formInput === station.id)) {
-        props.history.push(`/tide/${station.id}`);
-      }
-    });
+	stationList.stations.map((station, index) => {
+		if((formInput === station.name) || (formInput === station.id)) {
+			props.history.push(`/tide/${station.id}`);
+		}
+	});
 }
 
-
+// HOME
 function Home(props){
 	
-  // Redux function variable
+  // Redux function
   const dispatchRedux = useDispatch();
   
-  // From API Redux
-  const stationInput = useSelector(appState => appState.home.stationInput); 
-  const stationData = useSelector(appState => appState.station.stationData);
+  // Redux State
+  const stationInput = useSelector(appState => appState.home.stationInput),
+				stationData = useSelector(appState => appState.station.stationData);
 
   // Handle Form Change
   const handleChange = e => {
@@ -43,7 +42,8 @@ function Home(props){
     stationMatch(stationInput, stationData, props);
   };
   
-  return(
+	// Homepage View
+  return (
     <div className="homepage">
       <header className="branding">
         <EbbtideLogo />
@@ -67,11 +67,9 @@ function Home(props){
               >
                 <SearchIcon />
               </button>
-    {/*<StationApi stationInput={stationInput} />*/}
-    <StationApi stationInput={stationInput} />
+    					<StationApi stationInput={stationInput} />
             </div>
           </form>
-		      
           <div className="waves"></div>
           <div className="waves"></div>
           <div className="waves"></div>
@@ -80,6 +78,7 @@ function Home(props){
       <Footer />
     </div>
   )
+	
 }
 
 export default Home;

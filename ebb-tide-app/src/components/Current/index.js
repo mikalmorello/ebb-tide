@@ -6,37 +6,39 @@ import Loader from "../Loader";
 import "./current.scss";
 
 
-// Readable name for tide type
+// Format tide type name
 function formatTideType(tideType) {
 	if(tideType === 'L') {
-      tideType = 'Low Tide';
+		tideType = 'Low Tide';
 	} else if (tideType === 'H'){
-      tideType = 'High Tide';
+		tideType = 'High Tide';
 	}
 	return tideType;
 }
 
-
+// CURRENT
 function Current(){
   
-  // From API Redux
-  const nextTide = useSelector(appState => appState.api.nextTide); 
-  const stationName = useSelector(appState => appState.api.stationName);
-  const isLoading = useSelector(appState => appState.api.isLoading);
-  
+  //Redux State
+  const nextTide = useSelector(appState => appState.api.nextTide),
+				stationName = useSelector(appState => appState.api.stationName),
+				isLoading = useSelector(appState => appState.api.isLoading);
+	
+	// Check if data is loading
   if (isLoading) {
     return (
-      <Loader />
+    	<Loader />
     )
   } 
   
-  // If station data is not defined
+  // Check if station data is not defined
   if (typeof nextTide == 'undefined'){
-      return (
-        <div>Station does not have data, please try another location</div>
-      )
+		return (
+			<div>Station does not have data, please try another location</div>
+		)
   } 
-      
+  
+	// Current View
   return(
     <section className="current">
       <div className="current__container">

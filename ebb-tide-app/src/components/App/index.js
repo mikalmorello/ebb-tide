@@ -4,7 +4,11 @@ import Home from "../Home";
 import Tide from "../Tide";
 import "./app.scss";
 
+
+// APP
 function App() {
+	
+	// App View
   return(
     <Router>
       <Route exact path="/" component={Home} />
@@ -12,6 +16,7 @@ function App() {
       <Route exact path="/tide/:slug" component={Tide} />
     </Router>
   )
+	
 }
 
 export default App; 

@@ -8,14 +8,18 @@ import 'moment-timezone';
 import momentjs from "moment";
 import './tide.scss';
 
+
+// TIDE
 function Tide({match}){
-  // Redux function variable
+	
+  // Redux Function
   const dispatchRedux = useDispatch();
  
-  // Set state variables in Redux
+  // Redux Set State
   dispatchRedux({ type: "setStation", payload: match.params.slug });
   dispatchRedux({ type: "setTideDate", payload: momentjs(new Date()) });
   
+	// Tide View
   return(
     <div className="tide">
       <Header />
@@ -26,6 +30,7 @@ function Tide({match}){
       </main>
     </div>
   )
+	
 }
 
 export default Tide;

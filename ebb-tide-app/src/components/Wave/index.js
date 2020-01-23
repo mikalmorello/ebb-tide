@@ -1,25 +1,29 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import TideDirectionIcon from '../../svg/TideDirectionIcon';
 import Moment from 'react-moment';
-import 'moment-timezone';
 import momentjs from "moment";
+import 'moment-timezone';
+import TideDirectionIcon from '../../svg/TideDirectionIcon';
 import "./wave.scss";
 import "./tooltip.scss";
 
+
+// WAVE
 function Wave(){
   
-  // From Tide Redux
-  const tideDate = useSelector(appState => appState.tide.tideDate);
+  // Redux State
+  const tideDate = useSelector(appState => appState.tide.tideDate),
+				nextTide = useSelector(appState => appState.api.nextTide),
+				isLoading = useSelector(appState => appState.api.isLoading);
+	
+	// Local State
+	const [tidePercentage, setTidePercentage] = React.useState(1),
+				[currentTime, setCurrentTime] = React.useState();
   
-  // From API Redux
-  const nextTide = useSelector(appState => appState.api.nextTide);
-  const isLoading = useSelector(appState => appState.api.isLoading);
-  let tideHeight = 0;
-  let tideDirection = '';
-  const [tidePercentage, setTidePercentage] = React.useState(1);
-  const [currentTime, setCurrentTime] = React.useState();
-  
+	// Variables
+  let tideHeight = 0,
+			tideDirection = '';
+
   // Format tide height 
   if(nextTide){
     tideHeight = Number(nextTide.v);
@@ -40,30 +44,27 @@ function Wave(){
   React.useEffect(() => {
     if(nextTide){
       setTimeout(() => {
-        let tideTime = momentjs(nextTide.t);
-        let timeDiff = tideTime.diff(tideDate);
+        let tideTime = momentjs(nextTide.t),
+						timeDiff = tideTime.diff(tideDate);
         if(nextTide.type === 'L') {
           let timePercentage = Math.abs((((22350000 - timeDiff) / 22350000) * 100) - 100).toFixed(0);
           setTidePercentage(timePercentage);
-		} else if (nextTide.type === 'H'){
-          let timePercentage = (((22350000 - timeDiff) / 22350000) * 100).toFixed(0);
-          setTidePercentage(timePercentage);
-		}
-        
-       
-        
+				} else if (nextTide.type === 'H'){
+					let timePercentage = (((22350000 - timeDiff) / 22350000) * 100).toFixed(0);
+					setTidePercentage(timePercentage);
+				}
       }, 10);
     }
   }, [nextTide, tideDate]);
   
-		// Current time
-		React.useEffect(() => {
-			window.setInterval(function(){
-	    setCurrentTime(momentjs(new Date()).format("MMMM D hh:mm a"));
-//					dispatchRedux({ type: "setCurrentTime", payload: momentjs(new Date()).format("MMMM D hh:mm a") });
-			}, 1000);
-		});
+	// Current time
+	React.useEffect(() => {
+		window.setInterval(function(){
+			setCurrentTime(momentjs(new Date()).format("MMMM D hh:mm a"));
+		}, 1000);
+	});
   
+	// Check if data is loading
   if (isLoading) {
     return (
       <>
@@ -71,13 +72,14 @@ function Wave(){
     )
   } 
   
-  // If station data is not defined
-    if (typeof nextTide == 'undefined'){
-      return (
-        <></>
-      )
+  // Check if station data is not defined
+	if (typeof nextTide == 'undefined'){
+		return (
+			<></>
+		)
   } 
-      
+  
+	// Wave View
   return(
     <section className="wave">
       <div className="wave__header">

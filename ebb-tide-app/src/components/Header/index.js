@@ -5,7 +5,10 @@ import MenuIcon from '../../svg/MenuIcon';
 import "./header.scss";
 
 
+// HEADER
 function Header(){
+	
+	// Header View
   return(
     <header className="header">
       <div className="header__container">
@@ -15,6 +18,7 @@ function Header(){
       </div>
     </header>
   )
+	
 }
 
 export default Header;

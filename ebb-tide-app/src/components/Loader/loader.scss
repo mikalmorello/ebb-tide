@@ -1,43 +1,44 @@
+/* Loader Module */
+
+// Animation Keyframes
 @keyframes wave {
 	0% {
 		background-position: 0 0;
 	}
 	100% {
-		background-position: 136px 0;
+		background-position: 8.5rem 0;
 	}
 }
+
+// Loader Container
 .loader-container {
-//	background: black;
 	align-items: center;
-	display: flex;
-	justify-content: center;
-	width: 100px;
-	height: 100px;
-		padding: 1.5rem;
 	border: 2px solid black;
+	display: flex;
+	height: 6.25rem;
+	justify-content: center;
+	left: 50%;
 	overflow: hidden;
-   position: fixed;
-    left: 50%;
-    top: 30%;
-    transform: translate(-50%, -30%);
+	padding: 1.5rem;
+	position: fixed;
+	top: 30%;
+	transform: translate(-50%, -30%);
+	width: 100px;
 }
+
+// Loader
 .loader {
-//	background: black;
-	width:136px;
+	animation: 5s wave linear infinite;
+	background: url('/media/wave-loader-3.svg') repeat-x 0%;
+	box-shadow:inner 0 0 1rem rgba(red,1);
+	height: 2.875rem;
 	margin:2rem auto;
 	position:relative;
-	height: 46px;
-	background: url('/media/wave-loader-3.svg') repeat-x 0%;
-//	background-size: contain;
-	animation: 5s wave linear infinite;
-	box-shadow:inner 0 0 1rem rgba(red,1);
-
-	
+	width:8.5rem;
 	&::before{
 		content:"";
 		background:linear-gradient(90deg, rgba(white,0) 25%, rgba(white,1) 75%);
 		height:100%;
 		width:100%;
-//		@include absolute(0,0);
 	}
 }

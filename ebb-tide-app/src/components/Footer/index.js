@@ -2,16 +2,20 @@ import React from "react";
 import "./footer.scss";
 
 
+// FOOTER
 function Footer(){
+	
+	// Footer View
   return(
     <footer className="footer">
       <div className="footer_content">
-					<div className="footer_content-top">A Simple</div>
-					<div className="footer_content-middle">High Tide /\ low tide</div>
-					<div className="footer_content-bottom">App</div>
+				<div className="footer_content-top">A Simple</div>
+				<div className="footer_content-middle">High Tide /\ low tide</div>
+				<div className="footer_content-bottom">App</div>
 	    </div>
     </footer>
   )
+	
 }
 
 export default Footer;

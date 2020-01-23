@@ -1,5 +1,9 @@
+/* Tide Module */
+
+// Imports
 @import "../../styles/_colors.scss";  
 
+// Tide
 .tide {
   display: grid;
   height: 100vh;
@@ -11,6 +15,7 @@
   width: 100vw;
 }
 
+// Main
 .main {
   align-items: center;
   display: flex;

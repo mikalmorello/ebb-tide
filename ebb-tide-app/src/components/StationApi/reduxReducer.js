@@ -1,9 +1,7 @@
-const initialState = {
-}
+/* Redux Reducer */
 
-export default (prevState = initialState, { type, payload }) => {
-  let { 
-  } = prevState;
+// Reducer
+export default (prevState, { type, payload }) => {
   switch (type) {
     case "setStationData":
       return { ...prevState, stationData: payload }

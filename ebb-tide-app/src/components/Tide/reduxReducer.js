@@ -1,8 +1,12 @@
+/* Redux Reducer */
+
+// Initial State
 const initialState = {
   station: '',
   tideDate: '',
 }
 
+// Reducer
 export default (prevState = initialState, { type, payload }) => {
   let { 
     station, 

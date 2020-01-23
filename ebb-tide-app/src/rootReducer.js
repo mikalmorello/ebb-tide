@@ -5,6 +5,7 @@ import home from "./components/Home/reduxReducer";
 import station from "./components/StationApi/reduxReducer";
 
 
+// Reducer List
 const appReducers = combineReducers({
   api,
   tide, 
@@ -12,9 +13,4 @@ const appReducers = combineReducers({
   station
 })
 
-// const rootReducer = (state, action) => {
-//   console.log(JSON.stringify(state, null, 4))
-//   return appReducers(state, action)
-// }
-
-export default appReducers
+export default appReducers;

@@ -3,10 +3,10 @@ import 'moment-timezone';
 import momentjs from "moment";
 import { useSelector, useDispatch } from "react-redux";
 
+
 // High / Low Tide Data API Call
 const fetchData = async (station, startDate, endDate) => {
   const fetchUrl=`https://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS.COOPS.TAC.WL&begin_date=${startDate}&end_date=${endDate}&datum=MLLW&station=${station}&time_zone=lst_ldt&units=english&interval=hilo&format=json`
-//  console.log(fetchUrl);
   const response = await fetch(fetchUrl);
   const json = await response.json();
   return json;
@@ -20,23 +20,21 @@ const fetchStationData = async (station) => {
   return json;
 };
 
+// API CALLS
 function Api() {
   
-  // Redux function variable
+  // Redux function
   const dispatchRedux = useDispatch();
   
-  // From Tide Redux
-  const station = useSelector(appState => appState.tide.station);
-  const tideDate = useSelector(appState => appState.tide.tideDate);
-  
-  // From API Redux
-  const tideData = useSelector(appState => appState.api.tideData);
-  const startDate = useSelector(appState => appState.api.startDate);
-  const endDate = useSelector(appState => appState.api.endDate);
-  const previousTide = useSelector(appState => appState.api.previousTide);
-  const stationData = useSelector(appState => appState.api.stationData);
+  // Redux Variables
+  const station = useSelector(appState => appState.tide.station),
+				tideDate = useSelector(appState => appState.tide.tideDate),
+				tideData = useSelector(appState => appState.api.tideData),
+				startDate = useSelector(appState => appState.api.startDate),
+				endDate = useSelector(appState => appState.api.endDate),
+				previousTide = useSelector(appState => appState.api.previousTide),
+				stationData = useSelector(appState => appState.api.stationData);
 
-	
   // Determine date range based upon selected date
   React.useEffect(() => {
     const previousDay = momentjs(tideDate).subtract(1, 'days').format('YYYYMMD'),
@@ -44,8 +42,7 @@ function Api() {
     dispatchRedux({ type: "setStartDate", payload: previousDay });
     dispatchRedux({ type: "setEndDate", payload: nextDay });
   }, [startDate, endDate, tideDate, dispatchRedux]);
-
-  
+	
   // Call High / Low tide API 
   React.useEffect(() => {
     if(station && startDate && endDate){
@@ -57,20 +54,16 @@ function Api() {
     }
   }, [station, startDate, endDate, dispatchRedux ]);
 	
-	
   // Determine previous and next tides based off API call
   React.useEffect(() => {
-    console.log(tideData);
     if(tideData && tideData.predictions) {
       tideData.predictions.map((tide, index) => {
-        let tideTime = momentjs(tide.t);
-        let timeDiff = tideTime.diff(tideDate);
-
+        let tideTime = momentjs(tide.t),
+						timeDiff = tideTime.diff(tideDate);
         // Find the next tide, set tide array index
         if((timeDiff > 0) && (timeDiff < 22350000)){
           dispatchRedux({ type: "setNextTide", payload: tideData.predictions[index] });
         }
-
         // Find the previous tide, set tide array index									 
         if((timeDiff < 0) && (timeDiff > -22350000)){
           dispatchRedux({ type: "setPreviousTide", payload: tideData.predictions[index] });
@@ -80,7 +73,6 @@ function Api() {
       console.log('no tide data');
     }
   }, [tideData, tideDate, dispatchRedux]);
-	
 	
   // Set Tide Direction
   React.useEffect(() => {
@@ -93,7 +85,6 @@ function Api() {
     }
   }, [previousTide, dispatchRedux]);
 	
-	
   // Call Station API
   React.useEffect(() => {
     if(station){
@@ -104,24 +95,22 @@ function Api() {
     }
   }, [station, dispatchRedux]);
 	
-	
   // Set Station Name
   React.useEffect(() => {
     if(stationData){
       let tempStationName = stationData.stations[0].name,
-		tempStationState = stationData.stations[0].state;
+			tempStationState = stationData.stations[0].state;
       let tempStationFullName = `${tempStationName}, ${tempStationState}`;
       dispatchRedux({ type: "setStationName", payload: tempStationFullName });
     }
   }, [stationData, dispatchRedux]);
 
-			
-  // Active state after api has run
+  // API View
   return (
     <>
     </>
   );
+	
 }
-
 
 export default Api;
