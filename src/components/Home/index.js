@@ -11,7 +11,7 @@ import "./form.scss";
 
 
 // Station Match
-function stationMatch(formInput, stationList, props){
+function stationMatch(formInput, stationList, props, dispatchRedux){
 	
 	// If form input exists, convert it to lowercase
 	if(formInput){
@@ -21,8 +21,18 @@ function stationMatch(formInput, stationList, props){
 	stationList.stations.map((station, index) => {
 		if((formInput === (station.name).toLowerCase()) || (formInput === station.id)) {
 			props.history.push(`/tide/${station.id}`);
+		} else {
+			return dispatchRedux({ type: "error", payload: true });
 		}
 	});
+}
+
+function errorMessage(error){
+	if(error){
+		return(
+			<div className="station-form__error">error</div>
+		)
+	}
 }
 
 // HOME
@@ -33,7 +43,8 @@ function Home(props){
   
   // Redux State
   const stationInput = useSelector(appState => appState.home.stationInput),
-				stationData = useSelector(appState => appState.station.stationData);
+				stationData = useSelector(appState => appState.station.stationData),
+				error = useSelector(appState => appState.home.error);
 
   // Handle Form Change
   const handleChange = e => {
@@ -46,13 +57,15 @@ function Home(props){
 
   // Handle Form Submit
   const handleSubmit = async e => {
+		dispatchRedux({ type: "error", payload: false });
     e.preventDefault();
     dispatchRedux({ type: "setHomeStation", payload: stationInput });
-    stationMatch(stationInput, stationData, props);
+    stationMatch(stationInput, stationData, props, dispatchRedux);
   };
 	
 	// Check is 
-  
+  console.log(error);
+	
 	// Homepage View
   return (
     <div className="homepage">
@@ -78,6 +91,7 @@ function Home(props){
               >
                 <SearchIcon />
               </button>
+							{errorMessage(error)}
     					<StationApi />
             </div>
           </form>
