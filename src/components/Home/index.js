@@ -12,9 +12,14 @@ import "./form.scss";
 
 // Station Match
 function stationMatch(formInput, stationList, props){
+	
+	// If form input exists, convert it to lowercase
+	if(formInput){
+		formInput = formInput.toLowerCase();
+	}
+	// Loopm through stations to see if it matches the input name
 	stationList.stations.map((station, index) => {
-		console.log((station.name).toLowerCase());
-		if((formInput.toLowerCase() === (station.name).toLowerCase()) || (formInput === station.id)) {
+		if((formInput === (station.name).toLowerCase()) || (formInput === station.id)) {
 			props.history.push(`/tide/${station.id}`);
 		}
 	});
@@ -29,21 +34,24 @@ function Home(props){
   // Redux State
   const stationInput = useSelector(appState => appState.home.stationInput),
 				stationData = useSelector(appState => appState.station.stationData);
-	
-	console.log(stationInput);
 
   // Handle Form Change
   const handleChange = e => {
-    const newTypedStation = (e.target.value).toLowerCase();
+    let newTypedStation = e.target.value;
+		if(newTypedStation) {
+			newTypedStation = newTypedStation.toLowerCase();
+		}
     dispatchRedux({ type: "setStationInput", payload: newTypedStation });
   };
 
   // Handle Form Submit
   const handleSubmit = async e => {
     e.preventDefault();
-    dispatchRedux({ type: "setHomeStation", payload: stationInput.toLowerCase() });
+    dispatchRedux({ type: "setHomeStation", payload: stationInput });
     stationMatch(stationInput, stationData, props);
   };
+	
+	// Check is 
   
 	// Homepage View
   return (

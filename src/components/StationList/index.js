@@ -8,9 +8,14 @@ function StationList({newStationName}) {
   // Redux function
   const dispatchRedux = useDispatch();
 	
+	// Convert station name to lowercase if exists
+	if(newStationName){
+		newStationName = newStationName.toLowerCase();
+	}
+	
 	// Station View
   return (
-    <div className="autocomplete__item" onClick={() => dispatchRedux({ type: "setStationInput", payload: newStationName.toLowerCase() })}>
+    <div className="autocomplete__item" onClick={() => dispatchRedux({ type: "setStationInput", payload: newStationName})}>
     	{newStationName.toLowerCase()}
     </div>
   );
