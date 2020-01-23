@@ -57,5 +57,8 @@
 		cursor: pointer;
 		padding: .625rem;
 		text-transform: capitalize;
+		&--hidden {
+			display: none;
+		}
 	}
 }

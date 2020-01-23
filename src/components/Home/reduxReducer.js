@@ -15,7 +15,7 @@ export default (prevState = initialState, { type, payload }) => {
       return { ...prevState, station: payload }
     case "setStationInput":
       return { ...prevState, stationInput: payload }
-    case "error":
+    case "errorCheck":
       return { ...prevState, error: payload }
     default:
       return { ...prevState }

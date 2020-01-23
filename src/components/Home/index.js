@@ -12,7 +12,7 @@ import "./form.scss";
 
 // Station Match
 function stationMatch(formInput, stationList, props, dispatchRedux){
-	
+	console.log('station match running');
 	// If form input exists, convert it to lowercase
 	if(formInput){
 		formInput = formInput.toLowerCase();
@@ -22,13 +22,15 @@ function stationMatch(formInput, stationList, props, dispatchRedux){
 		if((formInput === (station.name).toLowerCase()) || (formInput === station.id)) {
 			props.history.push(`/tide/${station.id}`);
 		} else {
-			return dispatchRedux({ type: "error", payload: true });
+			dispatchRedux({ type: "errorCheck", payload: true });
 		}
+		return;
 	});
 }
 
-function errorMessage(error){
-	if(error){
+function errorMessage(errors){
+	console.log('error function is running ' + errors);
+	if(errors){
 		return(
 			<div className="station-form__error">error</div>
 		)
@@ -57,14 +59,11 @@ function Home(props){
 
   // Handle Form Submit
   const handleSubmit = async e => {
-		dispatchRedux({ type: "error", payload: false });
-    e.preventDefault();
+		e.preventDefault();
+		dispatchRedux({ type: "errorCheck", payload: false });
     dispatchRedux({ type: "setHomeStation", payload: stationInput });
     stationMatch(stationInput, stationData, props, dispatchRedux);
   };
-	
-	// Check is 
-  console.log(error);
 	
 	// Homepage View
   return (
